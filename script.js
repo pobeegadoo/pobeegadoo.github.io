@@ -663,3 +663,211 @@ window.addEventListener("load", () => {
     );
 
 });
+
+const backToTop = document.getElementById("backToTop");
+
+// Show button when scrolling down
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        backToTop.classList.add("show");
+    } else {
+        backToTop.classList.remove("show");
+    }
+});
+
+// Scroll smoothly to the top
+backToTop.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+// ==================================================
+// CONTACT FORM
+// ==================================================
+
+const contactForm = document.getElementById("contact-form");
+
+const contactSubmit =
+    document.getElementById("contact-submit");
+
+const formSuccess =
+    document.getElementById("form-success");
+
+const formError =
+    document.getElementById("form-error");
+
+
+// ==================================================
+// FORMSPREE ENDPOINT
+// ==================================================
+//
+// Replace YOUR_FORM_ID with the ID Formspree
+// gave you.
+//
+// Example:
+// https://formspree.io/f/abcd1234
+//
+// ==================================================
+
+const formspreeEndpoint =
+    "https://formspree.io/f/maewegpb";
+
+
+// ==================================================
+// SUBMIT FORM
+// ==================================================
+
+contactForm.addEventListener("submit", async function (event) {
+
+    // Stop the normal form submission.
+    // This prevents the Formspree "Thanks!" page.
+    event.preventDefault();
+
+
+    // Get button elements
+
+    const buttonText =
+        contactSubmit.querySelector(".button-text");
+
+    const buttonArrow =
+        contactSubmit.querySelector(".button-arrow");
+
+
+    // Hide previous messages
+
+    formSuccess.classList.remove("show");
+
+    formError.classList.remove("show");
+
+
+    // Disable button
+
+    contactSubmit.disabled = true;
+
+
+    // Change button text
+
+    buttonText.textContent = "Sending...";
+
+    buttonArrow.textContent = "↗";
+
+
+    try {
+
+        // Collect form data
+
+        const formData =
+            new FormData(contactForm);
+
+
+        // Send to Formspree
+
+        const response = await fetch(
+            formspreeEndpoint,
+            {
+                method: "POST",
+
+                body: formData,
+
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+
+        // ==================================================
+        // SUCCESS
+        // ==================================================
+
+        if (response.ok) {
+
+            // Show success message
+
+            formSuccess.classList.add("show");
+
+
+            // Clear the form
+
+            contactForm.reset();
+
+
+            // Update button
+
+            buttonText.textContent =
+                "Message Sent";
+
+            buttonArrow.textContent =
+                "✓";
+
+
+        }
+
+        // ==================================================
+        // ERROR
+        // ==================================================
+
+        else {
+
+            throw new Error(
+                "Form submission failed"
+            );
+
+        }
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Contact form error:",
+            error
+        );
+
+
+        // Show error
+
+        formError.classList.add("show");
+
+
+        // Reset button text
+
+        buttonText.textContent =
+            "Send Message";
+
+        buttonArrow.textContent =
+            "→";
+
+    }
+
+
+    // ==================================================
+    // RE-ENABLE BUTTON
+    // ==================================================
+
+    setTimeout(function () {
+
+        contactSubmit.disabled = false;
+
+
+        // Only reset button if there wasn't
+        // an error message being displayed.
+
+        if (
+            !formError.classList.contains("show")
+        ) {
+
+            buttonText.textContent =
+                "Send Message";
+
+            buttonArrow.textContent =
+                "→";
+
+        }
+
+    }, 3000);
+
+});
