@@ -927,12 +927,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatbotClose =
         document.getElementById("chatbotClose");
 
-    const chatbotInput =
-        document.getElementById("chatbotInput");
-
-    const chatbotSend =
-        document.getElementById("chatbotSend");
-
 
     /* =========================================
        OPEN / CLOSE
@@ -945,16 +939,6 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
 
                 chatbotWindow.classList.toggle("active");
-
-                if (
-                    chatbotWindow.classList.contains("active")
-                    &&
-                    chatbotInput
-                ) {
-                    setTimeout(() => {
-                        chatbotInput.focus();
-                    }, 200);
-                }
 
             }
         );
@@ -979,39 +963,6 @@ document.addEventListener("DOMContentLoaded", function () {
     /* =========================================
        SEND BUTTON
     ========================================= */
-
-    if (chatbotSend) {
-
-        chatbotSend.addEventListener(
-            "click",
-            sendMessage
-        );
-
-    }
-
-
-    /* =========================================
-       ENTER KEY
-    ========================================= */
-
-    if (chatbotInput) {
-
-        chatbotInput.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (event.key === "Enter") {
-
-                    event.preventDefault();
-
-                    sendMessage();
-
-                }
-
-            }
-        );
-
-    }
 
 });
 
