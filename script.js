@@ -871,3 +871,1043 @@ contactForm.addEventListener("submit", async function (event) {
     }, 3000);
 
 });
+
+/* =========================================
+   POB CHATBOT
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatbotToggle =
+        document.getElementById("chatbotToggle");
+
+    const chatbotWindow =
+        document.getElementById("chatbotWindow");
+
+    const chatbotClose =
+        document.getElementById("chatbotClose");
+
+    const chatbotInput =
+        document.getElementById("chatbotInput");
+
+    const chatbotSend =
+        document.getElementById("chatbotSend");
+
+
+    /* =========================================
+       OPEN / CLOSE
+    ========================================= */
+
+    if (chatbotToggle && chatbotWindow) {
+
+        chatbotToggle.addEventListener(
+            "click",
+            function () {
+
+                chatbotWindow.classList.toggle("active");
+
+                if (
+                    chatbotWindow.classList.contains("active")
+                    &&
+                    chatbotInput
+                ) {
+                    setTimeout(() => {
+                        chatbotInput.focus();
+                    }, 200);
+                }
+
+            }
+        );
+
+    }
+
+
+    if (chatbotClose && chatbotWindow) {
+
+        chatbotClose.addEventListener(
+            "click",
+            function () {
+
+                chatbotWindow.classList.remove("active");
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       SEND BUTTON
+    ========================================= */
+
+    if (chatbotSend) {
+
+        chatbotSend.addEventListener(
+            "click",
+            sendMessage
+        );
+
+    }
+
+
+    /* =========================================
+       ENTER KEY
+    ========================================= */
+
+    if (chatbotInput) {
+
+        chatbotInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+    }
+
+});
+
+
+/* =========================================
+   ADD MESSAGE
+========================================= */
+
+function addMessage(message, sender) {
+
+    const messages =
+        document.getElementById("chatbotMessages");
+
+    if (!messages) return;
+
+
+    const div =
+        document.createElement("div");
+
+
+    div.className =
+        sender === "bot"
+            ? "bot-message"
+            : "user-message";
+
+
+    div.innerHTML = message;
+
+
+    messages.appendChild(div);
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+}
+
+
+/* =========================================
+   TYPING EFFECT
+========================================= */
+
+function botReply(message) {
+
+    setTimeout(function () {
+
+        addMessage(message, "bot");
+
+    }, 500);
+
+}
+
+
+/* =========================================
+   QUICK QUESTIONS
+========================================= */
+
+function botQuestion(type) {
+
+    let question = "";
+    let answer = "";
+
+
+    /* WHO */
+
+    if (type === "who") {
+
+        question =
+            "Who is Parlan?";
+
+        answer = `
+            🕵️ <strong>IDENTITY SCAN COMPLETE</strong>
+            <br><br>
+
+            Parlan Obeegadoo is a cybersecurity
+            professional from Mauritius. 🔐
+
+            <br><br>
+
+            He has a Master's degree in
+            <strong>Cyber Security & Penetration Testing</strong>.
+
+            <br><br>
+
+            Basically... he spends his time
+            convincing computers that he's the boss. 😂
+        `;
+
+    }
+
+
+    /* SKILLS */
+
+    else if (type === "skills") {
+
+        question =
+            "What are Parlan's skills?";
+
+        answer = `
+            💻 <strong>SKILL DATABASE LOADED</strong>
+            <br><br>
+
+            🔐 Cybersecurity<br>
+            🕵️ Threat Detection<br>
+            🛡️ SOC / Security Analysis<br>
+            🌐 Network Security<br>
+            🐍 Python<br>
+            ☕ JavaScript<br>
+            🐧 Linux<br>
+            🔎 Log Analysis<br>
+            🐝 Honeypots
+            <br><br>
+
+            POB says: <strong>not bad. 😎</strong>
+        `;
+
+    }
+
+
+    /* EXPERIENCE */
+
+    else if (type === "experience") {
+
+        question =
+            "What experience does Parlan have?";
+
+        answer = `
+            💼 <strong>EXPERIENCE DATABASE ACCESSED</strong>
+            <br><br>
+
+            Parlan has professional experience
+            in cybersecurity and security analysis.
+
+            <br><br>
+
+            He has worked with technologies
+            including SIEM, EDR and endpoint
+            security tools.
+
+            <br><br>
+
+            For the full details, check the
+            <strong>Timeline</strong> section.
+        `;
+
+    }
+
+
+    /* EDUCATION */
+
+    else if (type === "education") {
+
+        question =
+            "What did Parlan study?";
+
+        answer = `
+            🎓 <strong>EDUCATION RECORD FOUND</strong>
+            <br><br>
+
+            <strong>
+            MSc Cyber Security & Penetration Testing
+            </strong>
+
+            <br><br>
+
+            He focused his studies on
+            cybersecurity, penetration testing
+            and threat detection.
+
+            <br><br>
+
+            And yes...
+
+            <strong>
+            he survived the dissertation. 😂
+            </strong>
+        `;
+
+    }
+
+
+    /* HONEYPOT */
+
+    else if (type === "honeypot") {
+
+        question =
+            "Tell me about the Honeypot Project.";
+
+        answer = `
+            🐝 <strong>HONEYPOT DETECTED</strong>
+            <br><br>
+
+            Parlan developed a honeypot environment
+            to study malicious activity,
+            attack patterns and intrusion behaviour.
+
+            <br><br>
+
+            The project combines
+            <strong>
+            honeypot technology,
+            threat detection and machine learning
+            </strong>.
+
+            <br><br>
+
+            POB's professional opinion:
+
+            <br><br>
+
+            <strong>
+            Why wait for attackers when you
+            can build something for them to attack? 😂
+            </strong>
+        `;
+
+    }
+
+
+    /* HIRE */
+
+    else if (type === "hire") {
+
+        question =
+            "Why should someone hire Parlan?";
+
+        answer = `
+            🚀 <strong>HIRING ANALYSIS</strong>
+            <br><br>
+
+            Parlan combines academic cybersecurity
+            knowledge with practical experience
+            and hands-on projects.
+
+            <br><br>
+
+            He's curious, technical and willing
+            to learn new technologies.
+
+            <br><br>
+
+            Most importantly...
+
+            <strong>
+            he actually likes cybersecurity. 🔐
+            </strong>
+
+            <br><br>
+
+            POB recommends:
+            <strong>INTERVIEW HIM. 😎</strong>
+        `;
+
+    }
+
+
+    /* JOKE */
+
+    else if (type === "joke") {
+
+        question =
+            "Tell me a cybersecurity joke.";
+
+        answer = `
+            😂 <strong>POB JOKE DATABASE</strong>
+            <br><br>
+
+            Why did the hacker break up with
+            their password?
+
+            <br><br>
+
+            Because it wasn't
+            <strong>strong enough.</strong> 💀😂
+        `;
+
+    }
+
+
+    addMessage(question, "user");
+
+
+    botReply(answer);
+}
+
+
+/* =========================================
+   USER MESSAGE
+========================================= */
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("chatbotInput");
+
+    if (!input) return;
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) return;
+
+
+    addMessage(message, "user");
+
+
+    input.value = "";
+
+
+    const lower =
+        message.toLowerCase();
+
+
+    let response = `
+        🤔 Hmm...
+
+        <br><br>
+
+        POB's tiny AI brain couldn't
+        find that in my database. 😂
+
+        <br><br>
+
+        Try asking about:
+
+        <strong>
+        Parlan, skills, experience,
+        education, projects, hiring,
+        jokes or cybersecurity.
+        </strong>
+    `;
+
+
+    /* =========================================
+       GREETINGS
+    ========================================= */
+
+    if (
+        lower.includes("hello") ||
+        lower.includes("hi") ||
+        lower.includes("hey")
+    ) {
+
+        response = `
+            👋 <strong>HELLO HUMAN.</strong>
+
+            <br><br>
+
+            I am <strong>POB</strong>,
+            Parlan's highly sophisticated
+            digital assistant.
+
+            <br><br>
+
+            Sophisticated...
+
+            <br>
+
+            ...most of the time. 😂
+
+            <br><br>
+
+            What do you want to know?
+        `;
+
+    }
+
+
+    /* =========================================
+       NAME
+    ========================================= */
+
+    else if (
+        lower.includes("who is parlan") ||
+        lower.includes("who is pob") ||
+        lower.includes("who are you") ||
+        lower.includes("your name")
+    ) {
+
+        response = `
+            🤖 <strong>IDENTITY CONFIRMED</strong>
+
+            <br><br>
+
+            My name is <strong>POB</strong>.
+
+            <br><br>
+
+            I'm Parlan's digital sidekick,
+            portfolio guardian and
+            professional nonsense generator. 😂
+        `;
+
+    }
+
+
+    /* =========================================
+       SKILLS
+    ========================================= */
+
+    else if (
+        lower.includes("skill") ||
+        lower.includes("technology") ||
+        lower.includes("technologies") ||
+        lower.includes("what can he do")
+    ) {
+
+        response = `
+            💻 <strong>SKILLS FOUND</strong>
+
+            <br><br>
+
+            Cybersecurity 🔐<br>
+            Threat Detection 🕵️<br>
+            Network Security 🌐<br>
+            Python 🐍<br>
+            JavaScript ☕<br>
+            Linux 🐧<br>
+            Log Analysis 🔎<br>
+            Honeypots 🐝
+
+            <br><br>
+
+            Want the full list?
+
+            <br>
+
+            Check the
+            <strong>Skills</strong> section.
+        `;
+
+    }
+
+
+    /* =========================================
+       EXPERIENCE
+    ========================================= */
+
+    else if (
+        lower.includes("experience") ||
+        lower.includes("work") ||
+        lower.includes("job")
+    ) {
+
+        response = `
+            💼 <strong>EXPERIENCE FOUND</strong>
+
+            <br><br>
+
+            Parlan has experience in
+            cybersecurity, security analysis,
+            software development and technical
+            projects.
+
+            <br><br>
+
+            Want the detailed timeline?
+
+            <br>
+
+            POB recommends checking
+            <strong>Experience & Achievements</strong>.
+        `;
+
+    }
+
+
+    /* =========================================
+       EDUCATION
+    ========================================= */
+
+    else if (
+        lower.includes("education") ||
+        lower.includes("degree") ||
+        lower.includes("master") ||
+        lower.includes("study")
+    ) {
+
+        response = `
+            🎓 <strong>EDUCATION DATABASE</strong>
+
+            <br><br>
+
+            MSc in
+            <strong>
+            Cyber Security & Penetration Testing
+            </strong>.
+
+            <br><br>
+
+            He also has an undergraduate degree
+            and focused his postgraduate studies
+            on cybersecurity.
+
+            <br><br>
+
+            Dissertation status:
+
+            <strong>
+            SURVIVED. 😂
+            </strong>
+        `;
+
+    }
+
+
+    /* =========================================
+       PROJECT
+    ========================================= */
+
+    else if (
+        lower.includes("project") ||
+        lower.includes("honeypot")
+    ) {
+
+        response = `
+            🐝 <strong>PROJECT DETECTED</strong>
+
+            <br><br>
+
+            The Honeypot project studies
+            malicious activity, attack patterns
+            and intrusion behaviour.
+
+            <br><br>
+
+            It combines honeypot technology,
+            cybersecurity monitoring and
+            machine learning.
+
+            <br><br>
+
+            POB translation:
+
+            <br>
+
+            <strong>
+            "Come attack my fake server." 😂
+            </strong>
+        `;
+
+    }
+
+
+    /* =========================================
+       HIRE
+    ========================================= */
+
+    else if (
+        lower.includes("hire") ||
+        lower.includes("employ") ||
+        lower.includes("good candidate")
+    ) {
+
+        response = `
+            🚀 <strong>HIRING MODE ACTIVATED</strong>
+
+            <br><br>
+
+            Parlan has cybersecurity knowledge,
+            practical experience and a willingness
+            to learn.
+
+            <br><br>
+
+            POB's recommendation:
+
+            <br><br>
+
+            <strong>
+            At least give him an interview. 😎
+            </strong>
+        `;
+
+    }
+
+
+    /* =========================================
+       JOKE
+    ========================================= */
+
+    else if (
+        lower.includes("joke") ||
+        lower.includes("funny")
+    ) {
+
+        response = `
+            😂 <strong>POB JOKE ENGINE</strong>
+
+            <br><br>
+
+            Why don't cybersecurity experts
+            trust stairs?
+
+            <br><br>
+
+            Because they're always
+            <strong>up to something.</strong> 💀😂
+        `;
+
+    }
+
+
+    /* =========================================
+       PASSWORD
+    ========================================= */
+
+    else if (
+        lower.includes("password") ||
+        lower.includes("secret")
+    ) {
+
+        response = `
+            🔐 <strong>SECURITY ALERT</strong>
+
+            <br><br>
+
+            Nice try.
+
+            <br><br>
+
+            POB does not know Parlan's
+            passwords.
+
+            <br><br>
+
+            And even if I did...
+
+            <strong>
+            I wouldn't tell you. 😂
+            </strong>
+        `;
+
+    }
+
+
+    /* =========================================
+       HACK
+    ========================================= */
+
+    else if (
+        lower.includes("hack") ||
+        lower.includes("attack")
+    ) {
+
+        response = `
+            🚨 <strong>INTRUSION DETECTED</strong>
+
+            <br><br>
+
+            Nice try, hacker. 👀
+
+            <br><br>
+
+            POB is a portfolio chatbot,
+            not your personal hacking assistant.
+
+            <br><br>
+
+            But I can tell you about
+            Parlan's cybersecurity projects. 🔐
+        `;
+
+    }
+
+
+    /* =========================================
+       COFFEE EASTER EGG
+    ========================================= */
+
+    else if (
+        lower.includes("coffee")
+    ) {
+
+        response = `
+            ☕ <strong>COFFEE PROTOCOL ACTIVATED</strong>
+
+            <br><br>
+
+            Scanning caffeine levels...
+
+            <br><br>
+
+            ☕ Coffee<br>
+            ☕ More coffee<br>
+            ☕ Emergency coffee
+
+            <br><br>
+
+            <strong>
+            STATUS: CAFFEINATED 🟢
+            </strong>
+
+            <br><br>
+
+            POB strongly recommends
+            more coffee. 😂
+        `;
+
+    }
+
+
+    /* =========================================
+       MATRIX EASTER EGG
+    ========================================= */
+
+    else if (
+        lower.includes("matrix") ||
+        lower.includes("neo")
+    ) {
+
+        response = `
+            🟢 <strong>WAKE UP, NEO...</strong>
+
+            <br><br>
+
+            The Matrix has been detected
+            inside this portfolio. 👀
+
+            <br><br>
+
+            Unfortunately, POB is still
+            looking for the red pill.
+
+            💊😂
+        `;
+
+    }
+
+
+    /* =========================================
+       SUDO EASTER EGG
+    ========================================= */
+
+    else if (
+        lower === "sudo" ||
+        lower.includes("sudo")
+    ) {
+
+        response = `
+            💻 <strong>ROOT ACCESS REQUESTED</strong>
+
+            <br><br>
+
+            Checking privileges...
+
+            <br>
+
+            Checking credentials...
+
+            <br>
+
+            Checking vibes...
+
+            <br><br>
+
+            ❌ <strong>ACCESS DENIED</strong>
+
+            <br><br>
+
+            Nice try. 😂
+        `;
+
+    }
+
+
+    /* =========================================
+       HANDSOME EASTER EGG
+    ========================================= */
+
+    else if (
+        lower.includes("parlan") &&
+        (
+            lower.includes("handsome") ||
+            lower.includes("good looking") ||
+            lower.includes("hot")
+        )
+    ) {
+
+        response = `
+            😎 <strong>OBJECTIVE INFORMATION DETECTED</strong>
+
+            <br><br>
+
+            POB can neither confirm nor deny
+            this highly important information.
+
+            <br><br>
+
+            ...
+
+            <br>
+
+            But POB approves. 😂
+        `;
+
+    }
+
+
+    /* =========================================
+       SEND RESPONSE
+    ========================================= */
+
+    setTimeout(function () {
+
+        addMessage(response, "bot");
+
+    }, 500);
+
+}
+
+
+/* =========================================
+   FAKE SECURITY SCAN
+========================================= */
+
+function securityScan() {
+
+    addMessage(
+        "🔍 Scan Site",
+        "user"
+    );
+
+
+    setTimeout(function () {
+
+        addMessage(`
+            🔍 <strong>POB SECURITY SCANNER</strong>
+
+            <br><br>
+
+            Initializing scan...
+
+            <br>
+
+            [████░░░░░░] 40%
+
+            <br>
+
+            Checking HTML...
+
+            <br>
+
+            [███████░░░] 70%
+
+            <br>
+
+            Checking CSS...
+
+            <br>
+
+            [██████████] 100%
+
+            <br><br>
+
+            🟢 HTML: CLEAN
+
+            <br>
+
+            🟢 CSS: CLEAN
+
+            <br>
+
+            🟢 JavaScript: SUSPICIOUSLY FUN
+
+            <br><br>
+
+            <strong>
+            No threats detected.
+
+            Probably. 😂
+            </strong>
+        `, "bot");
+
+    }, 700);
+
+}
+
+
+/* =========================================
+   FAKE HONEYPOT ATTACK
+========================================= */
+
+function simulateAttack() {
+
+    addMessage(
+        "🐝 Attack Honeypot",
+        "user"
+    );
+
+
+    setTimeout(function () {
+
+        addMessage(`
+            🐝 <strong>HONEYPOT ATTACK SIMULATION</strong>
+
+            <br><br>
+
+            Attacker detected...
+
+            <br>
+
+            IP: 127.0.0.1
+
+            <br>
+
+            Threat level: 🤨
+
+            <br><br>
+
+            Deploying countermeasures...
+
+            <br>
+
+            ██████████ 100%
+
+            <br><br>
+
+            🚨 ATTACKER CAUGHT
+
+            <br><br>
+
+            Wait...
+
+            <br>
+
+            It's you. 😂
+
+            <br><br>
+
+            <strong>
+            Honeypot successfully defended itself.
+            </strong>
+        `, "bot");
+
+    }, 900);
+
+}
