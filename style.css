@@ -2582,25 +2582,33 @@ header.scrolled{
 
 #backToTop {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
 
-    width: 45px;
-    height: 45px;
+    bottom: 30px;
+    right: 25px;
+
+    width: 60px;
+    height: 60px;
+
     border: none;
     border-radius: 50%;
 
     background: #00d9ff;
     color: #000;
-    font-size: 22px;
+
+    font-size: 24px;
     font-weight: bold;
 
     cursor: pointer;
 
     opacity: 0;
     visibility: hidden;
+
     transform: translateY(10px);
-    transition: all 0.3s ease;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
 
     z-index: 1000;
 }
@@ -2608,12 +2616,15 @@ header.scrolled{
 #backToTop.show {
     opacity: 1;
     visibility: visible;
+
     transform: translateY(0);
 }
 
 #backToTop:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+
+    box-shadow:
+        0 0 15px rgba(0, 217, 255, 0.5);
 }
 
 /* =========================================
@@ -2628,14 +2639,14 @@ header.scrolled{
     z-index: 9999;
 
     font-family: Arial, sans-serif;
+
+    transition: bottom 0.3s ease;
 }
 
 /* Move POB up when Back-to-Top button appears */
 .chatbot.move-up {
     bottom: 90px;
-    transition: bottom 0.3s ease;
 }
-
 
 /* =========================================
    TOGGLE BUTTON
@@ -2978,27 +2989,44 @@ header.scrolled{
 }
 
 /* =========================================
-   MOBILE
+   MOBILE CHATBOT + BACK TO TOP
 ========================================= */
 
 @media (max-width: 500px) {
 
+    /* POB */
     .chatbot {
         right: 15px;
         bottom: 15px;
     }
 
-    /* Move POB above Back-to-Top on mobile */
+    /* POB moves above Back-to-Top */
     .chatbot.move-up {
-        bottom: 75px;
+        bottom: 85px;
     }
 
+
+    /* Back-to-Top */
+    #backToTop {
+        right: 15px;
+        bottom: 15px;
+
+        width: 60px;
+        height: 60px;
+
+        font-size: 24px;
+    }
+
+
+    /* Chat window */
     .chatbot-window {
         width: 320px;
         max-width: calc(100vw - 30px);
         bottom: 75px;
     }
 
+
+    /* Messages */
     .chatbot-messages {
         height: 270px;
     }
