@@ -2645,7 +2645,7 @@ header.scrolled{
 
 /* Move POB up when Back-to-Top button appears */
 .chatbot.move-up {
-    bottom: 90px;
+    bottom: 95px;
 }
 
 /* =========================================
@@ -2825,6 +2825,22 @@ header.scrolled{
     color: #00ff88;
 }
 
+.chatbot-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chatbot-header strong {
+    color: var(--cyan);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.chatbot-header span {
+    color: #00FF88;
+    font-size: 11px;
+}
 
 /* =========================================
    MESSAGES
