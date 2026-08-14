@@ -2630,6 +2630,12 @@ header.scrolled{
     font-family: Arial, sans-serif;
 }
 
+/* Move POB up when Back-to-Top button appears */
+.chatbot.move-up {
+    bottom: 90px;
+    transition: bottom 0.3s ease;
+}
+
 
 /* =========================================
    TOGGLE BUTTON
@@ -3041,25 +3047,22 @@ header.scrolled{
 @media (max-width: 500px) {
 
     .chatbot {
-
         right: 15px;
         bottom: 15px;
     }
 
-
-    .chatbot-window {
-
-        width: 320px;
-
-        max-width:
-            calc(100vw - 30px);
-
+    /* Move POB above Back-to-Top on mobile */
+    .chatbot.move-up {
         bottom: 75px;
     }
 
+    .chatbot-window {
+        width: 320px;
+        max-width: calc(100vw - 30px);
+        bottom: 75px;
+    }
 
     .chatbot-messages {
-
         height: 270px;
     }
 }

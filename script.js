@@ -664,23 +664,63 @@ window.addEventListener("load", () => {
 
 });
 
-const backToTop = document.getElementById("backToTop");
+/* =========================================
+   BACK TO TOP + POB POSITION
+========================================= */
 
-// Show button when scrolling down
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-        backToTop.classList.add("show");
-    } else {
-        backToTop.classList.remove("show");
+document.addEventListener("DOMContentLoaded", function () {
+
+    const backToTop = document.getElementById("backToTop");
+    const chatbot = document.querySelector(".chatbot");
+
+    if (!backToTop) return;
+
+
+    // Check scroll position
+    function handleScroll() {
+
+        if (window.scrollY > 300) {
+
+            // Show back-to-top button
+            backToTop.classList.add("show");
+
+            // Move POB above it
+            if (chatbot) {
+                chatbot.classList.add("move-up");
+            }
+
+        } else {
+
+            // Hide back-to-top button
+            backToTop.classList.remove("show");
+
+            // Return POB to original position
+            if (chatbot) {
+                chatbot.classList.remove("move-up");
+            }
+
+        }
     }
-});
 
-// Scroll smoothly to the top
-backToTop.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+
+    // Detect scrolling
+    window.addEventListener("scroll", handleScroll);
+
+
+    // Back to top
+    backToTop.addEventListener("click", function () {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     });
+
+
+    // Check initial position
+    handleScroll();
+
 });
 
 // ==================================================
