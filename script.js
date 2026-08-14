@@ -1902,3 +1902,43 @@ function simulateAttack() {
     }, 900);
 
 }
+
+/* =========================================
+   TIMELINE SEE MORE / SEE LESS
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const timeline = document.querySelector(".timeline");
+    const timelineToggle = document.getElementById("timelineToggle");
+
+    if (!timeline || !timelineToggle) return;
+
+    timelineToggle.addEventListener("click", function () {
+
+        timeline.classList.toggle("expanded");
+
+        const isExpanded =
+            timeline.classList.contains("expanded");
+
+        if (isExpanded) {
+
+            timelineToggle.innerHTML =
+                'See Less <span>↑</span>';
+
+        } else {
+
+            timelineToggle.innerHTML =
+                'See More <span>↓</span>';
+
+            // Optional: return to the top of the timeline
+            document.getElementById("timeline").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+    });
+
+});

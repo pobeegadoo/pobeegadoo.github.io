@@ -3053,3 +3053,91 @@ header.scrolled{
         height: 270px;
     }
 }
+
+@media (min-width: 2000px) {
+
+    .hero,
+    .navbar,
+    .skills-grid,
+    .projects-grid,
+    .contact-container {
+        width: min(1600px, 90%);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+
+/* =========================================
+   TIMELINE SEE MORE
+========================================= */
+
+.timeline-item:nth-child(n + 3) {
+    display: none;
+}
+
+
+/* =========================================
+   TIMELINE TOGGLE BUTTON
+========================================= */
+
+.timeline-toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.timeline-toggle button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 28px;
+
+    background: rgba(0, 229, 255, 0.08);
+    color: var(--cyan);
+
+    border: 1px solid var(--cyan);
+    border-radius: 30px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.timeline-toggle button span {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.timeline-toggle button:hover {
+    background: var(--cyan);
+    color: #05070d;
+
+    box-shadow:
+        0 0 20px rgba(0, 229, 255, 0.35);
+
+    transform: translateY(-2px);
+}
+
+.timeline-toggle button:hover span {
+    transform: translateY(3px);
+}
+
+
+/* =========================================
+   EXPANDED TIMELINE
+========================================= */
+
+.timeline.expanded .timeline-item {
+    display: block;
+}
+
+.timeline.expanded + .timeline-toggle button span {
+    transform: rotate(180deg);
+}
