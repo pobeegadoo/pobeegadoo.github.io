@@ -2903,47 +2903,54 @@ header.scrolled{
 ========================================= */
 
 .chatbot-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 12px;
 
-    display: flex;
+    border-top: 1px solid #1d2922;
 
-    flex-wrap: wrap;
-
-    gap: 6px;
-
-    padding: 10px;
-
-    border-top:
-        1px solid #1d2922;
-
-    max-height: 120px;
-
-    overflow-y: auto;
+    background: #0b100d;
 }
 
 
+/* =========================================
+   CHATBOT BUTTONS
+========================================= */
+
 .chatbot-buttons button {
+
+    width: 100%;
+
+    padding: 10px 8px;
 
     background: #111915;
 
     color: #00ff88;
 
-    border:
-        1px solid #245c42;
+    border: 1px solid #245c42;
 
     border-radius: 8px;
 
-    padding: 7px 9px;
+    font-family: Arial, sans-serif;
 
     font-size: 11px;
+
+    font-weight: 600;
 
     cursor: pointer;
 
     transition:
         background 0.2s ease,
         color 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
+
+/* =========================================
+   BUTTON HOVER
+========================================= */
 
 .chatbot-buttons button:hover {
 
@@ -2951,94 +2958,24 @@ header.scrolled{
 
     color: #000;
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 12px rgba(0, 255, 136, 0.35);
 }
 
 
 /* =========================================
-   INPUT
+   BUTTON ACTIVE
 ========================================= */
 
-.chatbot-input {
+.chatbot-buttons button:active {
 
-    display: flex;
-
-    padding: 10px;
-
-    border-top:
-        1px solid #1d2922;
-
-    background: #0b100d;
-}
-
-
-.chatbot-input input {
-
-    flex: 1;
-
-    min-width: 0;
-
-    background: #111;
-
-    color: white;
-
-    border:
-        1px solid #333;
-
-    padding: 10px 12px;
-
-    border-radius:
-        8px 0 0 8px;
-
-    outline: none;
-
-    font-size: 13px;
-}
-
-
-.chatbot-input input:focus {
-
-    border-color: #00ff88;
+    transform: translateY(0);
 
     box-shadow:
-        0 0 8px rgba(0, 255, 136, 0.15);
+        0 0 6px rgba(0, 255, 136, 0.25);
 }
-
-
-.chatbot-input input::placeholder {
-
-    color:
-        rgba(255, 255, 255, 0.4);
-}
-
-
-.chatbot-input button {
-
-    width: 45px;
-
-    border: none;
-
-    background: #00ff88;
-
-    color: #000;
-
-    font-size: 17px;
-
-    cursor: pointer;
-
-    border-radius:
-        0 8px 8px 0;
-
-    transition:
-        background 0.2s ease;
-}
-
-
-.chatbot-input button:hover {
-
-    background: #39ffa3;
-}
-
 
 /* =========================================
    MOBILE
