@@ -1181,11 +1181,11 @@ header{
 /* Individual progress levels */
 
 .ceh-progress {
-    width: 60%;
+    width: 10%;
 }
 
 .cyber-progress {
-    width: 75%;
+    width: 45%;
 }
 
 .development-progress {
@@ -1193,7 +1193,7 @@ header{
 }
 
 .personal-progress {
-    width: 65%;
+    width: 50%;
 }
 
 
