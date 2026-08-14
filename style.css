@@ -171,20 +171,20 @@ header{
 
 }
 
-.shield{
+.shield {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.8));
+}
 
-    width:38px;
-
-    height:38px;
-
-    border:2px solid var(--cyan);
-
-    border-radius:10px;
-
-    transform:rotate(45deg);
-
-    box-shadow:0 0 15px rgba(0,229,255,.5);
-
+.shield svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .logo-text{
