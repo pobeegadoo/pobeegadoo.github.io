@@ -1337,7 +1337,7 @@ function botQuestion(type) {
 
             <br><br>
 
-            POB recommends emotional support
+            POBot recommends emotional support
             after this interaction. 💀
         `;
     }
