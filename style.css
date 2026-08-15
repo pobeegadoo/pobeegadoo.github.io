@@ -3141,3 +3141,43 @@ header.scrolled{
 .timeline.expanded + .timeline-toggle button span {
     transform: rotate(180deg);
 }
+
+/* =========================================
+   QUICK QUESTIONS SCROLL
+========================================= */
+
+.chatbot-buttons {
+    max-height: 190px;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #245c42 transparent;
+}
+
+
+/* Chrome / Edge / Safari */
+
+.chatbot-buttons::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chatbot-buttons::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatbot-buttons::-webkit-scrollbar-thumb {
+    background: #245c42;
+    border-radius: 10px;
+}
+
+.chatbot-buttons::-webkit-scrollbar-thumb:hover {
+    background: #00ff88;
+}
+
+@media (max-width: 500px) {
+
+    .chatbot-buttons {
+        max-height: 190px;
+    }
+
+}
