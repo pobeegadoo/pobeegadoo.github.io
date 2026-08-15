@@ -1071,15 +1071,14 @@ function botQuestion(type) {
 
             <br><br>
 
-            🔐 Cybersecurity<br>
-            🕵️ Threat Detection<br>
-            🛡️ Security Analysis<br>
-            🌐 Network Security<br>
-            🐍 Python<br>
-            ☕ JavaScript<br>
-            🐧 Linux<br>
+            🚨 Security Alert Investigation<br>
+            📡 Security Monitoring<br>
+            🖥️ SIEM<br>
             🔎 Log Analysis<br>
-            🐝 Honeypots
+            🛡️ Endpoint Security<br>
+            💡 Security Advisory<br>
+            🌐 Network Security<br>
+            🔐 Antivirus Management
 
             <br><br>
 
@@ -1250,7 +1249,7 @@ function botQuestion(type) {
             <br><br>
 
             <strong>
-            [ EDIT THIS ANSWER 👇 ]
+            [ GAMING PROFILE FOUND ✓ ]
             </strong>
 
             <br><br>
@@ -1259,11 +1258,18 @@ function botQuestion(type) {
 
             <br><br>
 
-            His gaming skills are...
+            POBot's gaming assessment:
 
-            <br>
+                <br>
 
-            <strong>[BE HONEST 😂]</strong>
+                🎯 Aim: ⭐⭐⭐⭐☆<br>
+                🧠 Strategy: ⭐⭐⭐⭐☆<br>
+                🏎️ Driving: ⭐⭐⭐⭐⭐<br>
+                🎮 Overall: ⭐⭐⭐⭐☆
+
+                <br><br>
+
+                <strong>Verdict: Not bad... but still needs more practice 😂</strong>
         `;
     }
 
@@ -1287,13 +1293,14 @@ function botQuestion(type) {
             <br><br>
 
             <strong>
-            [ EDIT THIS ANSWER 👇 ]
+            [ ACCESS GRANTED ✓ ]
             </strong>
 
             <br><br>
 
             When he's not doing cybersecurity,
-            Parlan enjoys <strong> Photography, Gaming, Reading, Annoying my parents☺️</strong>.
+            Parlan enjoys <strong> Photography, Gaming, Reading,
+                Fitness, and Exploring Technology.</strong>.
 
             <br><br>
 
