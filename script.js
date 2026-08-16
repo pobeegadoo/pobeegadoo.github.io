@@ -450,11 +450,11 @@ function animate() {
 const typingElement = document.getElementById("typing");
 
 const typingTexts = [
-    "Security Analyst",
-    "SOC Analyst",
-    "Software Developer",
-    "Future Penetration Tester",
-    "Web Developer"
+      "Security Analyst",
+      "SOC Analyst",
+      "Cybersecurity Professional",
+      "Aspiring Penetration Tester",
+      "Software Developer"
 ];
 
 let textIndex = 0;
