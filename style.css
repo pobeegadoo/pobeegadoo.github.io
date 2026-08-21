@@ -3198,3 +3198,19 @@ header.scrolled{
 
     background: rgba(0, 255, 136, 0.06);
 }
+
+/* =========================================
+   VISITOR COUNTER
+========================================= */
+
+.visitor-counter {
+    margin-top: 12px;
+    color: #8d96a8;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.visitor-counter span {
+    color: var(--cyan);
+    font-weight: 700;
+}

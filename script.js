@@ -1511,3 +1511,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+// =========================================
+// UNIQUE VISITOR COUNTER
+// =========================================
+
+async function updateVisitorCount() {
+    const counterElement = document.getElementById("visitor-count");
+
+    if (!counterElement) return;
+
+    try {
+        const response = await fetch(
+            "https://pob-visitor-counter.obeegadooparlan.workers.dev"
+        );
+
+        if (!response.ok) {
+            throw new Error("Visitor counter request failed");
+        }
+
+        const data = await response.json();
+
+        counterElement.textContent =
+            Number(data.visitors).toLocaleString();
+
+    } catch (error) {
+        console.error("Visitor counter error:", error);
+        counterElement.textContent = "—";
+    }
+}
+
+updateVisitorCount();
