@@ -1788,9 +1788,7 @@ document.addEventListener(
 
                     const pattern =
                         prompt(
-                            "🔐 Enter security pattern\n\n" +
-                            "Enter the pattern using numbers.\n" +
-                            "Example: 1-2-5-8-9"
+                            "🔐 Enter security pattern\n\n"
                         );
 
 
@@ -1810,7 +1808,7 @@ document.addEventListener(
                     // Your pattern
 
                     const correctPattern =
-                        "1-2-5-8-9";
+                        "admin";
 
 
                     // Check pattern
