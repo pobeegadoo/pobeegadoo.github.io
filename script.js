@@ -1512,7 +1512,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 // =========================================
-// UNIQUE VISITOR COUNTER
+// VISITOR COUNTER + VISITOR INTEL
+// =========================================
+
+const VISITOR_WORKER =
+    "https://pob-visitor-counter.obeegadooparlan.workers.dev";
+
+
+// =========================================
+// UPDATE VISITOR COUNT
 // =========================================
 
 async function updateVisitorCount() {
@@ -1524,17 +1532,12 @@ async function updateVisitorCount() {
 
     try {
 
-        // -----------------------------------------
-        // GET OR CREATE UNIQUE VISITOR ID
-        // -----------------------------------------
-
         let visitorId =
             localStorage.getItem("pob_visitor_id");
 
         if (!visitorId) {
 
-            visitorId =
-                crypto.randomUUID();
+            visitorId = crypto.randomUUID();
 
             localStorage.setItem(
                 "pob_visitor_id",
@@ -1543,12 +1546,8 @@ async function updateVisitorCount() {
         }
 
 
-        // -----------------------------------------
-        // SEND VISITOR ID TO CLOUDFLARE WORKER
-        // -----------------------------------------
-
         const response = await fetch(
-            "https://pob-visitor-counter.obeegadooparlan.workers.dev",
+            VISITOR_WORKER,
             {
                 method: "GET",
 
@@ -1559,451 +1558,276 @@ async function updateVisitorCount() {
         );
 
 
-        // -----------------------------------------
-        // CHECK RESPONSE
-        // -----------------------------------------
-
         if (!response.ok) {
-
             throw new Error(
                 "Visitor counter request failed"
             );
-
-        }
-
-        // =========================================
-        // UNIQUE VISITOR COUNTER
-        // =========================================
-
-        const VISITOR_WORKER =
-            "https://pob-visitor-counter.obeegadooparlan.workers.dev";
-
-
-        // =========================================
-        // UPDATE VISITOR COUNT
-        // =========================================
-
-        async function updateVisitorCount() {
-
-            const counterElement =
-                document.getElementById(
-                    "visitor-count"
-                );
-
-            if (!counterElement) return;
-
-
-            try {
-
-                // -----------------------------------------
-                // GET OR CREATE UNIQUE VISITOR ID
-                // -----------------------------------------
-
-                let visitorId =
-                    localStorage.getItem(
-                        "pob_visitor_id"
-                    );
-
-
-                if (!visitorId) {
-
-                    visitorId =
-                        crypto.randomUUID();
-
-
-                    localStorage.setItem(
-                        "pob_visitor_id",
-                        visitorId
-                    );
-
-                }
-
-
-                // -----------------------------------------
-                // SEND VISITOR ID TO WORKER
-                // -----------------------------------------
-
-                const response =
-                    await fetch(
-                        VISITOR_WORKER,
-                        {
-
-                            method: "GET",
-
-                            headers: {
-
-                                "X-Visitor-ID":
-                                    visitorId
-
-                            }
-
-                        }
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Visitor counter request failed"
-                    );
-
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                // -----------------------------------------
-                // DISPLAY COUNT
-                // -----------------------------------------
-
-                counterElement.textContent =
-                    Number(
-                        data.visitors
-                    ).toLocaleString();
-
-
-            } catch (error) {
-
-                console.error(
-                    "Visitor counter error:",
-                    error
-                );
-
-
-                counterElement.textContent =
-                    "—";
-
-            }
-
         }
 
 
-        // =========================================
-        // HIDDEN VISITOR INTEL
-        // =========================================
+        const data =
+            await response.json();
 
-        const visitorButton =
-            document.getElementById(
-                "visitor-count-button"
+
+        counterElement.textContent =
+            Number(data.visitors)
+                .toLocaleString();
+
+
+    } catch (error) {
+
+        console.error(
+            "Visitor counter error:",
+            error
+        );
+
+        counterElement.textContent = "—";
+    }
+}
+
+
+// =========================================
+// COUNTRY INFORMATION
+// =========================================
+
+function getCountryInfo(country) {
+
+    const countries = {
+
+        MU: {
+            name: "Mauritius",
+            flag: "🇲🇺"
+        },
+
+        US: {
+            name: "United States",
+            flag: "🇺🇸"
+        },
+
+        GB: {
+            name: "United Kingdom",
+            flag: "🇬🇧"
+        },
+
+        CA: {
+            name: "Canada",
+            flag: "🇨🇦"
+        },
+
+        AU: {
+            name: "Australia",
+            flag: "🇦🇺"
+        },
+
+        FR: {
+            name: "France",
+            flag: "🇫🇷"
+        },
+
+        DE: {
+            name: "Germany",
+            flag: "🇩🇪"
+        },
+
+        IN: {
+            name: "India",
+            flag: "🇮🇳"
+        },
+
+        ZA: {
+            name: "South Africa",
+            flag: "🇿🇦"
+        },
+
+        AE: {
+            name: "United Arab Emirates",
+            flag: "🇦🇪"
+        }
+
+    };
+
+
+    return countries[country] || {
+        name: country || "Unknown",
+        flag: "🌍"
+    };
+}
+
+
+// =========================================
+// LOAD COUNTRY DATA
+// =========================================
+
+async function loadVisitorIntel() {
+
+    const countriesContainer =
+        document.getElementById(
+            "visitor-countries"
+        );
+
+    const totalElement =
+        document.getElementById(
+            "intel-total"
+        );
+
+    if (!countriesContainer || !totalElement) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${VISITOR_WORKER}/countries`
             );
 
 
-        const visitorIntel =
-            document.getElementById(
-                "visitor-intel"
+        if (!response.ok) {
+            throw new Error(
+                "Unable to retrieve country data"
             );
-
-
-        // =========================================
-        // COUNTRY FLAGS
-        // =========================================
-
-        function getCountryInfo(country) {
-
-            const countries = {
-
-                "MU": {
-                    name: "Mauritius",
-                    flag: "🇲🇺"
-                },
-
-                "US": {
-                    name: "United States",
-                    flag: "🇺🇸"
-                },
-
-                "GB": {
-                    name: "United Kingdom",
-                    flag: "🇬🇧"
-                },
-
-                "CA": {
-                    name: "Canada",
-                    flag: "🇨🇦"
-                },
-
-                "AU": {
-                    name: "Australia",
-                    flag: "🇦🇺"
-                },
-
-                "FR": {
-                    name: "France",
-                    flag: "🇫🇷"
-                },
-
-                "DE": {
-                    name: "Germany",
-                    flag: "🇩🇪"
-                },
-
-                "IN": {
-                    name: "India",
-                    flag: "🇮🇳"
-                },
-
-                "ZA": {
-                    name: "South Africa",
-                    flag: "🇿🇦"
-                },
-
-                "AE": {
-                    name: "United Arab Emirates",
-                    flag: "🇦🇪"
-                }
-
-            };
-
-
-            if (countries[country]) {
-
-                return countries[country];
-
-            }
-
-
-            return {
-
-                name: country || "Unknown",
-
-                flag: "🌍"
-
-            };
-
         }
 
 
-        // =========================================
-        // LOAD COUNTRY DATA
-        // =========================================
-
-        async function loadVisitorIntel() {
-
-            const countriesContainer =
-                document.getElementById(
-                    "visitor-countries"
-                );
+        const data =
+            await response.json();
 
 
-            const totalElement =
-                document.getElementById(
-                    "intel-total"
-                );
+        totalElement.textContent =
+            Number(data.total || 0)
+                .toLocaleString();
 
 
-            try {
-
-                const response =
-                    await fetch(
-                        `${VISITOR_WORKER}/countries`
-                    );
+        countriesContainer.innerHTML = "";
 
 
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Unable to retrieve country data"
-                    );
-
-                }
-
-
-                const data =
-                    await response.json();
+        const countries =
+            Object.entries(
+                data.countries || {}
+            ).sort(
+                (a, b) =>
+                    Number(b[1]) -
+                    Number(a[1])
+            );
 
 
-                // -----------------------------------------
-                // TOTAL
-                // -----------------------------------------
+        countries.forEach(
+            ([country, count]) => {
 
-                totalElement.textContent =
-                    Number(
-                        data.total || 0
-                    ).toLocaleString();
+                const info =
+                    getCountryInfo(country);
 
 
-                // -----------------------------------------
-                // CLEAR EXISTING DATA
-                // -----------------------------------------
-
-                countriesContainer.innerHTML =
-                    "";
+                const row =
+                    document.createElement("div");
 
 
-                // -----------------------------------------
-                // SORT COUNTRIES
-                // -----------------------------------------
-
-                const countries =
-                    Object.entries(
-                        data.countries || {}
-                    ).sort(
-                        (a, b) =>
-                            Number(b[1]) -
-                            Number(a[1])
-                    );
+                row.className =
+                    "visitor-country-row";
 
 
-                // -----------------------------------------
-                // DISPLAY COUNTRIES
-                // -----------------------------------------
+                row.innerHTML = `
+                    <span>
+                        ${info.flag}
+                        ${info.name}
+                    </span>
 
-                countries.forEach(
-                    ([country, count]) => {
-
-                        const info =
-                            getCountryInfo(
-                                country
-                            );
-
-
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        row.className =
-                            "visitor-country-row";
-
-
-                        row.innerHTML = `
-
-                            <span>
-                                ${info.flag}
-                                ${info.name}
-                            </span>
-
-                            <span
-                                class="visitor-country-count"
-                            >
-                                ${Number(count)}
-                            </span>
-
-                        `;
-
-
-                        countriesContainer.appendChild(
-                            row
-                        );
-
-                    }
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Visitor Intel error:",
-                    error
-                );
-
-
-                countriesContainer.innerHTML = `
-
-                    <div class="visitor-access-message">
-                        Unable to load visitor intelligence.
-                    </div>
-
+                    <span
+                        class="visitor-country-count"
+                    >
+                        ${Number(count)}
+                    </span>
                 `;
 
+
+                countriesContainer.appendChild(row);
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Visitor Intel error:",
+            error
+        );
+
+
+        countriesContainer.innerHTML = `
+            <div class="visitor-access-message">
+                Unable to load visitor intelligence.
+            </div>
+        `;
+    }
+}
+
+
+// =========================================
+// CLICK VISITOR COUNTER
+// =========================================
+
+const visitorButton =
+    document.getElementById(
+        "visitor-count-button"
+    );
+
+const visitorIntel =
+    document.getElementById(
+        "visitor-intel"
+    );
+
+
+if (visitorButton && visitorIntel) {
+
+    visitorButton.addEventListener(
+        "click",
+        async function () {
+
+            const pattern =
+                prompt(
+                    "🔐 Enter security pattern\n\n" +
+                    "Enter the pattern using numbers.\n" +
+                    "Example: 1-2-5-8-9"
+                );
+
+
+            if (pattern === null) {
+                return;
             }
 
+
+            const enteredPattern =
+                pattern.replace(/\s/g, "");
+
+
+            const correctPattern =
+                "1-2-5-8-9";
+
+
+            if (
+                enteredPattern !==
+                correctPattern
+            ) {
+
+                alert(
+                    "❌ Access denied."
+                );
+
+                return;
+            }
+
+
+            visitorIntel.hidden = false;
+
+            await loadVisitorIntel();
         }
+    );
+}
 
 
-        // =========================================
-        // CLICK VISITOR COUNTER
-        // =========================================
+// =========================================
+// START VISITOR COUNTER
+// =========================================
 
-        if (visitorButton) {
-
-            visitorButton.addEventListener(
-                "click",
-                async function () {
-
-                    // -----------------------------------------
-                    // ASK FOR PATTERN
-                    // -----------------------------------------
-
-                    const pattern =
-                        prompt(
-                            "🔐 Enter security pattern\n\n" +
-                            "Enter the pattern using numbers.\n" +
-                            "Example: 1-2-5-8-9"
-                        );
-
-
-                    // User pressed Cancel
-                    if (pattern === null) {
-
-                        return;
-
-                    }
-
-
-                    // -----------------------------------------
-                    // NORMALIZE INPUT
-                    // -----------------------------------------
-
-                    const enteredPattern =
-                        pattern
-                            .replace(
-                                /\s/g,
-                                ""
-                            );
-
-
-                    // -----------------------------------------
-                    // SECRET PATTERN
-                    // -----------------------------------------
-
-                    const correctPattern =
-                        "1-2-5-8-9";
-
-
-                    // -----------------------------------------
-                    // CHECK PATTERN
-                    // -----------------------------------------
-
-                    if (
-                        enteredPattern !==
-                        correctPattern
-                    ) {
-
-                        alert(
-                            "❌ Access denied."
-                        );
-
-                        return;
-
-                    }
-
-
-                    // -----------------------------------------
-                    // ACCESS GRANTED
-                    // -----------------------------------------
-
-                    visitorIntel.hidden =
-                        false;
-
-
-                    // -----------------------------------------
-                    // LOAD COUNTRY DATA
-                    // -----------------------------------------
-
-                    await loadVisitorIntel();
-
-                }
-            );
-
-        }
-
-
-        // =========================================
-        // START COUNTER
-        // =========================================
-
-        updateVisitorCount();
+updateVisitorCount();
