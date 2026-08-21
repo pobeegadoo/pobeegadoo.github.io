@@ -1520,8 +1520,11 @@ const VISITOR_WORKER =
 
 
 // =========================================
-// UPDATE VISITOR COUNT
+// UNIQUE VISITOR COUNTER
 // =========================================
+
+const VISITOR_WORKER =
+    "https://pob-visitor-counter.obeegadooparlan.workers.dev";
 
 async function updateVisitorCount() {
 
@@ -1557,9 +1560,11 @@ async function updateVisitorCount() {
         );
 
         if (!response.ok) {
+
             throw new Error(
                 "Visitor counter request failed"
             );
+
         }
 
         const data =
@@ -1582,265 +1587,12 @@ async function updateVisitorCount() {
 
 
 // =========================================
-// COUNTRY INFORMATION
-// =========================================
-
-function getCountryInfo(country) {
-
-    const countries = {
-
-        MU: {
-            name: "Mauritius",
-            flag: "🇲🇺"
-        },
-
-        US: {
-            name: "United States",
-            flag: "🇺🇸"
-        },
-
-        GB: {
-            name: "United Kingdom",
-            flag: "🇬🇧"
-        },
-
-        CA: {
-            name: "Canada",
-            flag: "🇨🇦"
-        },
-
-        AU: {
-            name: "Australia",
-            flag: "🇦🇺"
-        },
-
-        FR: {
-            name: "France",
-            flag: "🇫🇷"
-        },
-
-        DE: {
-            name: "Germany",
-            flag: "🇩🇪"
-        },
-
-        IN: {
-            name: "India",
-            flag: "🇮🇳"
-        },
-
-        ZA: {
-            name: "South Africa",
-            flag: "🇿🇦"
-        },
-
-        AE: {
-            name: "United Arab Emirates",
-            flag: "🇦🇪"
-        }
-
-    };
-
-    return countries[country] || {
-        name: country || "Unknown",
-        flag: "🌍"
-    };
-}
-
-
-// =========================================
-// LOAD VISITOR INTEL
-// =========================================
-
-async function loadVisitorIntel() {
-
-    const countriesContainer =
-        document.getElementById(
-            "visitor-countries"
-        );
-
-    const totalElement =
-        document.getElementById(
-            "intel-total"
-        );
-
-    if (!countriesContainer || !totalElement) {
-        return;
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                `${VISITOR_WORKER}/countries`
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                "Unable to retrieve country data"
-            );
-        }
-
-        const data =
-            await response.json();
-
-
-        // Total visitors
-
-        totalElement.textContent =
-            Number(data.total || 0)
-                .toLocaleString();
-
-
-        // Clear old countries
-
-        countriesContainer.innerHTML = "";
-
-
-        // Sort highest → lowest
-
-        const countries =
-            Object.entries(
-                data.countries || {}
-            ).sort(
-                (a, b) =>
-                    Number(b[1]) -
-                    Number(a[1])
-            );
-
-
-        // Display countries
-
-        countries.forEach(
-            ([country, count]) => {
-
-                const info =
-                    getCountryInfo(country);
-
-                const row =
-                    document.createElement("div");
-
-                row.className =
-                    "visitor-country-row";
-
-                row.innerHTML = `
-                    <span>
-                        <span class="visitor-country-flag">
-                            ${info.flag}
-                        </span>
-                        ${info.name}
-                    </span>
-
-                    <span
-                        class="visitor-country-count"
-                    >
-                        ${Number(count)}
-                    </span>
-                `;
-
-                countriesContainer.appendChild(row);
-            }
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Visitor Intel error:",
-            error
-        );
-
-        countriesContainer.innerHTML = `
-            <div class="visitor-access-message">
-                Unable to load visitor intelligence.
-            </div>
-        `;
-    }
-}
-
-
-// =========================================
-// HIDDEN PATTERN
+// START VISITOR COUNTER
 // =========================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
-
-        const visitorButton =
-            document.getElementById(
-                "visitor-count-button"
-            );
-
-        const visitorIntel =
-            document.getElementById(
-                "visitor-intel"
-            );
-
-
-        if (
-            visitorButton &&
-            visitorIntel
-        ) {
-
-            visitorButton.addEventListener(
-                "click",
-                async function () {
-
-                    const pattern =
-                        prompt(
-                            "🔐 Enter security pattern\n\n"
-                        );
-
-
-                    // Cancel
-
-                    if (pattern === null) {
-                        return;
-                    }
-
-
-                    // Remove spaces
-
-                    const enteredPattern =
-                        pattern.replace(/\s/g, "");
-
-
-                    // Your pattern
-
-                    const correctPattern =
-                        "admin";
-
-
-                    // Check pattern
-
-                    if (
-                        enteredPattern !==
-                        correctPattern
-                    ) {
-
-                        alert(
-                            "❌ Access denied."
-                        );
-
-                        return;
-                    }
-
-
-                    // Access granted
-
-                    visitorIntel.hidden = false;
-
-
-                    // Load country data
-
-                    await loadVisitorIntel();
-
-                }
-            );
-        }
-
-
-        // Start counter
 
         updateVisitorCount();
 
