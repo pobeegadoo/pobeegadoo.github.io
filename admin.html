@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>POB | Visitor Analytics</title>
 
+
     <style>
+
         :root {
+
             --cyan: #00e5ff;
             --green: #00ff88;
             --bg: #05080d;
@@ -15,57 +24,91 @@
             --text: #ffffff;
             --muted: #8d96a8;
             --border: rgba(0, 229, 255, 0.2);
+
         }
+
 
         * {
+
             box-sizing: border-box;
+
         }
 
+
         body {
+
             margin: 0;
+
             min-height: 100vh;
+
             background:
+
                 radial-gradient(
                     circle at top,
                     rgba(0, 229, 255, 0.08),
                     transparent 40%
                 ),
+
                 var(--bg);
 
             color: var(--text);
+
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
 
             padding: 40px 20px;
+
         }
+
 
         .container {
+
             width: min(900px, 100%);
+
             margin: auto;
+
         }
+
 
         header {
+
             text-align: center;
+
             margin-bottom: 35px;
+
         }
+
 
         .logo {
+
             color: var(--cyan);
+
             font-weight: 800;
+
             letter-spacing: 4px;
+
             font-size: 0.9rem;
+
         }
+
 
         h1 {
+
             margin: 10px 0;
+
             font-size: 2rem;
+
         }
 
+
         .subtitle {
+
             color: var(--muted);
+
         }
+
 
         /* =========================================
            LOGIN
@@ -73,193 +116,444 @@
 
         .login-card,
         .dashboard {
+
             background: var(--card);
+
             border: 1px solid var(--border);
+
             border-radius: 16px;
+
             padding: 30px;
+
             box-shadow:
                 0 0 30px rgba(0, 229, 255, 0.05);
+
         }
+
 
         label {
+
             display: block;
+
             margin-bottom: 8px;
+
             color: var(--muted);
+
             font-size: 0.85rem;
+
         }
+
 
         input {
+
             width: 100%;
+
             padding: 14px;
+
             border-radius: 8px;
+
             border: 1px solid var(--border);
+
             background: #050a10;
+
             color: white;
+
             outline: none;
+
             margin-bottom: 15px;
+
         }
+
 
         input:focus {
+
             border-color: var(--cyan);
+
         }
+
 
         button {
+
             width: 100%;
+
             padding: 14px;
+
             border: none;
+
             border-radius: 8px;
+
             background: var(--cyan);
+
             color: #031016;
+
             font-weight: 800;
+
             cursor: pointer;
+
         }
+
 
         button:hover {
+
             filter: brightness(1.1);
+
         }
 
+
         .error {
+
             display: none;
+
             margin-top: 15px;
+
             color: #ff7777;
+
             font-size: 0.85rem;
+
         }
+
 
         /* =========================================
            DASHBOARD
         ========================================= */
 
         .dashboard {
+
             display: none;
+
         }
+
 
         .dashboard-header {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             gap: 20px;
+
             margin-bottom: 25px;
+
         }
+
 
         .dashboard-header h2 {
+
             margin: 0;
+
         }
+
 
         .logout {
+
             width: auto;
+
             padding: 9px 15px;
+
             background: transparent;
+
             border: 1px solid var(--border);
+
             color: var(--cyan);
+
         }
 
+
         .stats {
+
             display: grid;
+
             grid-template-columns:
                 repeat(2, 1fr);
 
             gap: 20px;
+
             margin-bottom: 25px;
+
         }
+
 
         .stat-card {
+
             padding: 25px;
+
             border-radius: 12px;
+
             background: #070d14;
+
             border: 1px solid var(--border);
+
         }
+
 
         .stat-title {
+
             color: var(--muted);
+
             font-size: 0.8rem;
+
             margin-bottom: 8px;
+
         }
+
 
         .stat-value {
+
             color: var(--cyan);
+
             font-size: 2rem;
+
             font-weight: 800;
+
         }
+
 
         .section {
+
             margin-top: 25px;
+
         }
+
 
         .section h3 {
+
             color: var(--cyan);
+
             margin-bottom: 15px;
+
         }
+
+
+        /* =========================================
+           COUNTRIES
+        ========================================= */
 
         .country {
+
             display: flex;
+
             justify-content: space-between;
+
+            align-items: center;
+
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.05);
+
         }
+
 
         .country-count {
+
             color: var(--green);
+
             font-weight: 700;
+
         }
+
+
+        /* =========================================
+           VISITORS
+        ========================================= */
 
         .visitor {
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+            padding: 16px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.05);
+
         }
+
+
+        .visitor-main {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+        }
+
 
         .visitor-location {
+
             font-weight: 700;
+
+            line-height: 1.5;
+
         }
+
 
         .visitor-details {
-            margin-top: 5px;
+
+            margin-top: 6px;
+
             color: var(--muted);
+
             font-size: 0.8rem;
+
+            line-height: 1.6;
+
         }
 
-        .loading {
-            color: var(--muted);
-            text-align: center;
-            padding: 20px;
+
+        /* =========================================
+           REMOVE BUTTON
+        ========================================= */
+
+        .remove-visitor {
+
+            flex-shrink: 0;
+
+            width: auto;
+
+            padding: 7px 11px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(255, 70, 70, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 70, 70, 0.3);
+
+            color: #ff7777;
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease;
+
         }
+
+
+        .remove-visitor:hover {
+
+            background:
+                rgba(255, 70, 70, 0.18);
+
+            border-color:
+                rgba(255, 70, 70, 0.6);
+
+            filter: none;
+
+        }
+
+
+        .remove-visitor:disabled {
+
+            opacity: 0.5;
+
+            cursor: wait;
+
+        }
+
+
+        .loading {
+
+            color: var(--muted);
+
+            text-align: center;
+
+            padding: 20px;
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
 
         @media (max-width: 600px) {
 
             .stats {
+
                 grid-template-columns: 1fr;
+
             }
+
 
             .dashboard-header {
+
                 align-items: flex-start;
+
                 flex-direction: column;
+
             }
 
+
             .logout {
+
                 width: 100%;
+
             }
+
+
+            .visitor-main {
+
+                flex-direction: column;
+
+            }
+
+
+            .remove-visitor {
+
+                width: auto;
+
+                align-self: flex-start;
+
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
 
     <header>
 
         <div class="logo">
+
             POB // CYBERSECURITY
+
         </div>
 
+
         <h1>
+
             Visitor Analytics
+
         </h1>
 
+
         <p class="subtitle">
+
             Private analytics dashboard
+
         </p>
 
     </header>
+
 
 
     <!-- =========================================
@@ -272,8 +566,11 @@
     >
 
         <label for="admin-token">
+
             Admin Token
+
         </label>
+
 
         <input
             type="password"
@@ -282,20 +579,27 @@
             autocomplete="off"
         >
 
+
         <button
             onclick="loadAnalytics()"
         >
+
             VIEW ANALYTICS
+
         </button>
+
 
         <div
             id="error"
             class="error"
         >
+
             Invalid token or unable to retrieve analytics.
+
         </div>
 
     </div>
+
 
 
     <!-- =========================================
@@ -307,102 +611,149 @@
         class="dashboard"
     >
 
+
         <div class="dashboard-header">
 
             <h2>
+
                 📊 POB Analytics
+
             </h2>
+
 
             <button
                 class="logout"
                 onclick="logout()"
             >
+
                 Logout
+
             </button>
 
         </div>
 
 
-        <!-- STATS -->
+
+        <!-- =========================================
+             STATS
+        ========================================== -->
 
         <div class="stats">
+
 
             <div class="stat-card">
 
                 <div class="stat-title">
+
                     UNIQUE VISITORS
+
                 </div>
+
 
                 <div
                     id="total-visitors"
                     class="stat-value"
                 >
+
                     —
+
                 </div>
 
             </div>
+
 
 
             <div class="stat-card">
 
                 <div class="stat-title">
+
                     COUNTRIES
+
                 </div>
+
 
                 <div
                     id="total-countries"
                     class="stat-value"
                 >
+
                     —
+
                 </div>
 
             </div>
 
+
         </div>
 
 
-        <!-- COUNTRIES -->
+
+        <!-- =========================================
+             COUNTRIES
+        ========================================== -->
 
         <div class="section">
 
             <h3>
+
                 🌍 Visitors by Country
+
             </h3>
+
 
             <div id="countries">
+
                 <div class="loading">
+
                     Loading...
+
                 </div>
+
             </div>
 
         </div>
 
 
-        <!-- RECENT VISITORS -->
+
+        <!-- =========================================
+             VISITORS
+        ========================================== -->
 
         <div class="section">
 
             <h3>
+
                 📍 Visitor Locations
+
             </h3>
 
+
             <div id="visitors">
+
                 <div class="loading">
+
                     Loading...
+
                 </div>
+
             </div>
 
         </div>
 
+
     </div>
+
 
 </div>
 
 
+
 <script>
+
 
 const WORKER_URL =
     "https://pob-visitor-counter.obeegadooparlan.workers.dev";
+
 
 
 /* =========================================
@@ -412,9 +763,12 @@ const WORKER_URL =
 async function loadAnalytics() {
 
     const token =
-        document.getElementById(
-            "admin-token"
-        ).value.trim();
+        document
+            .getElementById(
+                "admin-token"
+            )
+            .value
+            .trim();
 
 
     if (!token) {
@@ -432,15 +786,22 @@ async function loadAnalytics() {
 
         const response =
             await fetch(
+
                 `${WORKER_URL}/admin`,
+
                 {
+
                     method: "GET",
 
                     headers: {
+
                         "X-Admin-Token":
                             token
+
                     }
+
                 }
+
             );
 
 
@@ -457,16 +818,23 @@ async function loadAnalytics() {
             await response.json();
 
 
-        displayAnalytics(data);
-
-
         // Keep token only in memory.
-        window.adminToken = token;
+
+        window.adminToken =
+            token;
+
+
+        displayAnalytics(
+            data
+        );
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         showError(
             "Invalid token or unable to retrieve analytics."
@@ -477,37 +845,56 @@ async function loadAnalytics() {
 }
 
 
+
 /* =========================================
    DISPLAY ANALYTICS
 ========================================= */
 
-function displayAnalytics(data) {
+function displayAnalytics(
+    data
+) {
 
-    document.getElementById(
-        "login-card"
-    ).style.display = "none";
+    document
+        .getElementById(
+            "login-card"
+        )
+        .style.display =
+            "none";
 
 
-    document.getElementById(
-        "dashboard"
-    ).style.display = "block";
+    document
+        .getElementById(
+            "dashboard"
+        )
+        .style.display =
+            "block";
 
 
-    document.getElementById(
-        "total-visitors"
-    ).textContent =
-        Number(data.total || 0)
-        .toLocaleString();
+    document
+        .getElementById(
+            "total-visitors"
+        )
+        .textContent =
+
+            Number(
+                data.total || 0
+            )
+            .toLocaleString();
 
 
     const countries =
         data.countries || {};
 
 
-    document.getElementById(
-        "total-countries"
-    ).textContent =
-        Object.keys(countries).length;
+    document
+        .getElementById(
+            "total-countries"
+        )
+        .textContent =
+
+            Object
+                .keys(countries)
+                .length;
 
 
     displayCountries(
@@ -522,6 +909,7 @@ function displayAnalytics(data) {
 }
 
 
+
 /* =========================================
    DISPLAY COUNTRIES
 ========================================= */
@@ -531,25 +919,30 @@ function displayCountries(
 ) {
 
     const container =
-        document.getElementById(
-            "countries"
-        );
+        document
+            .getElementById(
+                "countries"
+            );
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     const entries =
-        Object.entries(countries)
-        .sort(
-            (a, b) =>
-                b[1] - a[1]
-        );
+
+        Object
+            .entries(countries)
+            .sort(
+                (a, b) =>
+                    b[1] - a[1]
+            );
 
 
     if (!entries.length) {
 
         container.innerHTML =
+
             `<div class="loading">
                 No location data yet.
              </div>`;
@@ -563,9 +956,11 @@ function displayCountries(
         ([country, count]) => {
 
             const row =
-                document.createElement(
-                    "div"
-                );
+                document
+                    .createElement(
+                        "div"
+                    );
+
 
             row.className =
                 "country";
@@ -594,8 +989,10 @@ function displayCountries(
 }
 
 
+
 /* =========================================
    DISPLAY VISITORS
+   NEWEST FIRST
 ========================================= */
 
 function displayVisitors(
@@ -603,17 +1000,20 @@ function displayVisitors(
 ) {
 
     const container =
-        document.getElementById(
-            "visitors"
-        );
+        document
+            .getElementById(
+                "visitors"
+            );
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     if (!visitors.length) {
 
         container.innerHTML =
+
             `<div class="loading">
                 No visitor location data yet.
              </div>`;
@@ -623,16 +1023,45 @@ function displayVisitors(
     }
 
 
+    /*
+        Sort by visitedAt.
+
+        Newest visitor = first.
+
+        We use timestamps rather than
+        relying on KV list order.
+    */
+
     visitors
         .slice()
-        .reverse()
+        .sort(
+            (a, b) => {
+
+                const timeA =
+                    Date.parse(
+                        a.visitedAt || ""
+                    ) || 0;
+
+
+                const timeB =
+                    Date.parse(
+                        b.visitedAt || ""
+                    ) || 0;
+
+
+                return timeB - timeA;
+
+            }
+        )
         .forEach(
             visitor => {
 
                 const item =
-                    document.createElement(
-                        "div"
-                    );
+                    document
+                        .createElement(
+                            "div"
+                        );
+
 
                 item.className =
                     "visitor";
@@ -660,34 +1089,68 @@ function displayVisitors(
 
                 const date =
                     visitor.visitedAt
+
                         ? new Date(
                             visitor.visitedAt
-                          ).toLocaleString()
+                        ).toLocaleString()
+
                         : "Unknown date";
+
+
+                /*
+                    Visitor ID is added by the Worker
+                    specifically for the protected
+                    admin page.
+                */
+
+                const visitorId =
+                    visitor.id || "";
 
 
                 item.innerHTML = `
 
-                    <div class="visitor-location">
+                    <div class="visitor-main">
 
-                        📍
-                        ${escapeHTML(city)},
-                        ${escapeHTML(country)}
+                        <div>
 
-                    </div>
+                            <div class="visitor-location">
 
-                    <div class="visitor-details">
+                                📍
+                                ${escapeHTML(city)},
+                                ${escapeHTML(country)}
 
-                        Region:
-                        ${escapeHTML(region)}
-                        <br>
+                            </div>
 
-                        Timezone:
-                        ${escapeHTML(timezone)}
-                        <br>
 
-                        Visited:
-                        ${escapeHTML(date)}
+                            <div class="visitor-details">
+
+                                Region:
+                                ${escapeHTML(region)}
+
+                                <br>
+
+                                Timezone:
+                                ${escapeHTML(timezone)}
+
+                                <br>
+
+                                Visited:
+                                ${escapeHTML(date)}
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="remove-visitor"
+                            type="button"
+                            onclick="removeVisitor(this, '${escapeJS(visitorId)}')"
+                        >
+
+                            🗑 Remove
+
+                        </button>
 
                     </div>
 
@@ -704,35 +1167,264 @@ function displayVisitors(
 }
 
 
+
+/* =========================================
+   REMOVE ONE VISITOR
+========================================= */
+
+async function removeVisitor(
+    button,
+    visitorId
+) {
+
+    if (!visitorId) {
+
+        alert(
+            "Unable to identify this visitor."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+
+            "Are you sure you want to remove this visitor?\n\n" +
+
+            "This will permanently delete the visitor record " +
+            "and decrease the total visitor count by 1."
+
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const token =
+        window.adminToken;
+
+
+    if (!token) {
+
+        alert(
+            "Your admin session has expired. Please log in again."
+        );
+
+        logout();
+
+        return;
+
+    }
+
+
+    try {
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "Removing...";
+
+
+        const response =
+            await fetch(
+
+                `${WORKER_URL}/admin/delete?visitorId=${encodeURIComponent(visitorId)}`,
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "X-Admin-Token":
+                            token
+
+                    }
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.error ||
+                "Failed to remove visitor"
+
+            );
+
+        }
+
+
+        /*
+            Reload the complete analytics data.
+
+            This automatically updates:
+            - total visitors
+            - countries
+            - visitor records
+        */
+
+        await refreshAnalytics();
+
+
+    } catch (error) {
+
+        console.error(
+            "Remove visitor error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to remove visitor."
+        );
+
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "🗑 Remove";
+
+    }
+
+}
+
+
+
+/* =========================================
+   REFRESH ANALYTICS
+========================================= */
+
+async function refreshAnalytics() {
+
+    const token =
+        window.adminToken;
+
+
+    if (!token) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                `${WORKER_URL}/admin`,
+
+                {
+
+                    method: "GET",
+
+                    headers: {
+
+                        "X-Admin-Token":
+                            token
+
+                    }
+
+                }
+
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to refresh analytics"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        displayAnalytics(
+            data
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            "Visitor was removed, but the dashboard could not be refreshed."
+        );
+
+    }
+
+}
+
+
+
 /* =========================================
    LOGOUT
 ========================================= */
 
 function logout() {
 
-    window.adminToken = null;
+    window.adminToken =
+        null;
 
 
-    document.getElementById(
-        "dashboard"
-    ).style.display = "none";
+    document
+        .getElementById(
+            "dashboard"
+        )
+        .style.display =
+            "none";
 
 
-    document.getElementById(
-        "login-card"
-    ).style.display = "block";
+    document
+        .getElementById(
+            "login-card"
+        )
+        .style.display =
+            "block";
 
 
-    document.getElementById(
-        "admin-token"
-    ).value = "";
+    document
+        .getElementById(
+            "admin-token"
+        )
+        .value =
+            "";
 
 
-    document.getElementById(
-        "error"
-    ).style.display = "none";
+    document
+        .getElementById(
+            "error"
+        )
+        .style.display =
+            "none";
 
 }
+
 
 
 /* =========================================
@@ -744,9 +1436,10 @@ function showError(
 ) {
 
     const error =
-        document.getElementById(
-            "error"
-        );
+        document
+            .getElementById(
+                "error"
+            );
 
 
     error.textContent =
@@ -759,6 +1452,7 @@ function showError(
 }
 
 
+
 /* =========================================
    BASIC HTML ESCAPING
 ========================================= */
@@ -768,22 +1462,27 @@ function escapeHTML(
 ) {
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -792,12 +1491,54 @@ function escapeHTML(
 }
 
 
+
+/* =========================================
+   JAVASCRIPT STRING ESCAPING
+========================================= */
+
+function escapeJS(
+    value
+) {
+
+    return String(value)
+
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+
+        .replace(
+            /'/g,
+            "\\'"
+        )
+
+        .replace(
+            /"/g,
+            '\\"'
+        )
+
+        .replace(
+            /\r/g,
+            "\\r"
+        )
+
+        .replace(
+            /\n/g,
+            "\\n"
+        );
+
+}
+
+
+
 /* =========================================
    ENTER KEY
 ========================================= */
 
 document
-    .getElementById("admin-token")
+    .getElementById(
+        "admin-token"
+    )
     .addEventListener(
         "keydown",
         event => {
@@ -813,7 +1554,10 @@ document
         }
     );
 
+
 </script>
 
+
 </body>
+
 </html>
