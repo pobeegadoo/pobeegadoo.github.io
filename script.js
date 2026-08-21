@@ -1512,7 +1512,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 // =========================================
-// VISITOR COUNTER + VISITOR INTEL
+// UNIQUE VISITOR COUNTER + VISITOR INTEL
 // =========================================
 
 const VISITOR_WORKER =
@@ -1545,7 +1545,6 @@ async function updateVisitorCount() {
             );
         }
 
-
         const response = await fetch(
             VISITOR_WORKER,
             {
@@ -1557,22 +1556,18 @@ async function updateVisitorCount() {
             }
         );
 
-
         if (!response.ok) {
             throw new Error(
                 "Visitor counter request failed"
             );
         }
 
-
         const data =
             await response.json();
 
-
         counterElement.textContent =
-            Number(data.visitors)
+            Number(data.visitors || 0)
                 .toLocaleString();
-
 
     } catch (error) {
 
@@ -1646,7 +1641,6 @@ function getCountryInfo(country) {
 
     };
 
-
     return countries[country] || {
         name: country || "Unknown",
         flag: "🌍"
@@ -1655,7 +1649,7 @@ function getCountryInfo(country) {
 
 
 // =========================================
-// LOAD COUNTRY DATA
+// LOAD VISITOR INTEL
 // =========================================
 
 async function loadVisitorIntel() {
@@ -1674,7 +1668,6 @@ async function loadVisitorIntel() {
         return;
     }
 
-
     try {
 
         const response =
@@ -1682,25 +1675,29 @@ async function loadVisitorIntel() {
                 `${VISITOR_WORKER}/countries`
             );
 
-
         if (!response.ok) {
             throw new Error(
                 "Unable to retrieve country data"
             );
         }
 
-
         const data =
             await response.json();
 
+
+        // Total visitors
 
         totalElement.textContent =
             Number(data.total || 0)
                 .toLocaleString();
 
 
+        // Clear old countries
+
         countriesContainer.innerHTML = "";
 
+
+        // Sort highest → lowest
 
         const countries =
             Object.entries(
@@ -1712,20 +1709,19 @@ async function loadVisitorIntel() {
             );
 
 
+        // Display countries
+
         countries.forEach(
             ([country, count]) => {
 
                 const info =
                     getCountryInfo(country);
 
-
                 const row =
                     document.createElement("div");
 
-
                 row.className =
                     "visitor-country-row";
-
 
                 row.innerHTML = `
                     <span>
@@ -1740,11 +1736,9 @@ async function loadVisitorIntel() {
                     </span>
                 `;
 
-
                 countriesContainer.appendChild(row);
             }
         );
-
 
     } catch (error) {
 
@@ -1752,7 +1746,6 @@ async function loadVisitorIntel() {
             "Visitor Intel error:",
             error
         );
-
 
         countriesContainer.innerHTML = `
             <div class="visitor-access-message">
@@ -1764,70 +1757,92 @@ async function loadVisitorIntel() {
 
 
 // =========================================
-// CLICK VISITOR COUNTER
+// HIDDEN PATTERN
 // =========================================
 
-const visitorButton =
-    document.getElementById(
-        "visitor-count-button"
-    );
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-const visitorIntel =
-    document.getElementById(
-        "visitor-intel"
-    );
+        const visitorButton =
+            document.getElementById(
+                "visitor-count-button"
+            );
 
-
-if (visitorButton && visitorIntel) {
-
-    visitorButton.addEventListener(
-        "click",
-        async function () {
-
-            const pattern =
-                prompt(
-                    "🔐 Enter security pattern\n\n" +
-                    "Enter the pattern using numbers.\n" +
-                    "Example: 1-2-5-8-9"
-                );
+        const visitorIntel =
+            document.getElementById(
+                "visitor-intel"
+            );
 
 
-            if (pattern === null) {
-                return;
-            }
+        if (
+            visitorButton &&
+            visitorIntel
+        ) {
+
+            visitorButton.addEventListener(
+                "click",
+                async function () {
+
+                    const pattern =
+                        prompt(
+                            "🔐 Enter security pattern\n\n" +
+                            "Enter the pattern using numbers.\n" +
+                            "Example: 1-2-5-8-9"
+                        );
 
 
-            const enteredPattern =
-                pattern.replace(/\s/g, "");
+                    // Cancel
+
+                    if (pattern === null) {
+                        return;
+                    }
 
 
-            const correctPattern =
-                "1-2-5-8-9";
+                    // Remove spaces
+
+                    const enteredPattern =
+                        pattern.replace(/\s/g, "");
 
 
-            if (
-                enteredPattern !==
-                correctPattern
-            ) {
+                    // Your pattern
 
-                alert(
-                    "❌ Access denied."
-                );
-
-                return;
-            }
+                    const correctPattern =
+                        "1-2-5-8-9";
 
 
-            visitorIntel.hidden = false;
+                    // Check pattern
 
-            await loadVisitorIntel();
+                    if (
+                        enteredPattern !==
+                        correctPattern
+                    ) {
+
+                        alert(
+                            "❌ Access denied."
+                        );
+
+                        return;
+                    }
+
+
+                    // Access granted
+
+                    visitorIntel.hidden = false;
+
+
+                    // Load country data
+
+                    await loadVisitorIntel();
+
+                }
+            );
         }
-    );
-}
 
 
-// =========================================
-// START VISITOR COUNTER
-// =========================================
+        // Start counter
 
-updateVisitorCount();
+        updateVisitorCount();
+
+    }
+);
