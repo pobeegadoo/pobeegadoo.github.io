@@ -1511,13 +1511,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-// =========================================
-// UNIQUE VISITOR COUNTER + VISITOR INTEL
-// =========================================
-
-const VISITOR_WORKER =
-    "https://pob-visitor-counter.obeegadooparlan.workers.dev";
-
 
 // =========================================
 // UNIQUE VISITOR COUNTER
