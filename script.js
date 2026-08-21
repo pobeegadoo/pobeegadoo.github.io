@@ -1725,7 +1725,9 @@ async function loadVisitorIntel() {
 
                 row.innerHTML = `
                     <span>
-                        ${info.flag}
+                        <span class="visitor-country-flag">
+                            ${info.flag}
+                        </span>
                         ${info.name}
                     </span>
 

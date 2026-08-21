@@ -3412,3 +3412,22 @@ header.scrolled{
     text-align: center;
 
 }
+/* =========================================
+   COUNTRY FLAG EMOJI
+========================================= */
+
+.visitor-country-flag {
+    font-family:
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Noto Color Emoji",
+        sans-serif;
+
+    font-size: 1.1rem;
+
+    margin-right: 6px;
+
+    font-style: normal;
+
+    display: inline-block;
+}
