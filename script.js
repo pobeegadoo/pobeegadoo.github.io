@@ -1516,28 +1516,95 @@ document.addEventListener("DOMContentLoaded", function () {
 // =========================================
 
 async function updateVisitorCount() {
-    const counterElement = document.getElementById("visitor-count");
+
+    const counterElement =
+        document.getElementById("visitor-count");
 
     if (!counterElement) return;
 
     try {
-        const response = await fetch(
-            "https://pob-visitor-counter.obeegadooparlan.workers.dev"
-        );
 
-        if (!response.ok) {
-            throw new Error("Visitor counter request failed");
+        // -----------------------------------------
+        // GET OR CREATE UNIQUE VISITOR ID
+        // -----------------------------------------
+
+        let visitorId =
+            localStorage.getItem("pob_visitor_id");
+
+        if (!visitorId) {
+
+            visitorId =
+                crypto.randomUUID();
+
+            localStorage.setItem(
+                "pob_visitor_id",
+                visitorId
+            );
         }
 
-        const data = await response.json();
+
+        // -----------------------------------------
+        // SEND VISITOR ID TO CLOUDFLARE WORKER
+        // -----------------------------------------
+
+        const response = await fetch(
+            "https://pob-visitor-counter.obeegadooparlan.workers.dev",
+            {
+                method: "GET",
+
+                headers: {
+                    "X-Visitor-ID": visitorId
+                }
+            }
+        );
+
+
+        // -----------------------------------------
+        // CHECK RESPONSE
+        // -----------------------------------------
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Visitor counter request failed"
+            );
+
+        }
+
+
+        // -----------------------------------------
+        // GET VISITOR COUNT
+        // -----------------------------------------
+
+        const data =
+            await response.json();
+
+
+        // -----------------------------------------
+        // DISPLAY COUNT
+        // -----------------------------------------
 
         counterElement.textContent =
-            Number(data.visitors).toLocaleString();
+            Number(data.visitors)
+                .toLocaleString();
+
 
     } catch (error) {
-        console.error("Visitor counter error:", error);
+
+        console.error(
+            "Visitor counter error:",
+            error
+        );
+
         counterElement.textContent = "—";
+
     }
+
 }
+
+
+// =========================================
+// START COUNTER
+// =========================================
 
 updateVisitorCount();
